@@ -17,7 +17,7 @@ from cavitysimulations.utilities.sweep_util import *
 
 def main():
     geom = a_poly_tapered_cavity(substrate_parameters= {'waveguide_height'  : 0.19, 'substrate_height'  : 5},
-                                 waveguide_parameters = {'wvg_width' : 0.65, 'wvg_height'  : 0.19})
+                                 waveguide_parameters = {'wvg_width' : 0.7, 'wvg_height'  : 0.19})
     
     boundary_layers = get_boundary_layer(sim2d=False)
     
