@@ -1,9 +1,0 @@
-wvg_height = 0.19 , mode = yO, SUBSRATE = True
-hx = 0.3, hy = 0.2, a = 0.4, w = 0.65, gamma = 0.08578, freqs = 186 , 225 
-hx = 0.3, hy = 0.25, a = 0.4, w = 0.65, gamma = 0.08589, freqs = 188 , 233 
-hx = 0.35, hy = 0.2, a = 0.45, w = 0.65, gamma = 0.09656, freqs = 176 , 214 
-hx = 0.35, hy = 0.25, a = 0.45, w = 0.65, gamma = 0.10768, freqs = 178 , 221 
-hx = 0.35, hy = 0.3, a = 0.45, w = 0.65, gamma = 0.11369, freqs = 180 , 229 
-hx = 0.35, hy = 0.35, a = 0.45, w = 0.65, gamma = 0.11475, freqs = 182 , 235 
-hx = 0.35, hy = 0.35, a = 0.45, w = 0.7, gamma = 0.11689, freqs = 178 , 227 
-hx = 0.35, hy = 0.4, a = 0.45, w = 0.7, gamma = 0.11959, freqs = 180 , 234 
