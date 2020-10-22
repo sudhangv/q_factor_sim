@@ -15,15 +15,15 @@ def _a_poly_tapering(geom=None, n_segments=20, material_holes=mp.vacuum):
             
     material_holes = index_to_material(material_holes)
     
-    hx = 0.25 
-    hy = 0.45
-    w = 0.65
-    a_center = 0.374
-    a_mirror = 0.43
+    hx = 0.275 
+    hy = 0.5
+    w = 0.7
+    a_center = 0.385
+    a_mirror = 0.449
     h = 0.19
     
     Lx = 20
-    number_of_tapered_holes = 10
+    number_of_tapered_holes = 9
     
     substrate = True
     mode = "yO"

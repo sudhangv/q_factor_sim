@@ -30,7 +30,7 @@ def main():
     
     #symmetries = [mp.Mirror(mp.X,+1), mp.Mirror(mp.Y,-1), mp.Mirror(mp.Z,+1)]
    # symmetries = [mp.Mirror(mp.X,1), mp.Mirror(mp.Y,-1)]
-    symmetries = [mp.Mirror(mp.X, +1), mp.Mirror(mp.Y, -1)]   
+    symmetries = [mp.Mirror(mp.X, +1)]   
     
     sim = mp.Simulation(resolution = 30, 
                         cell_size=mp.Vector3(20, 8, 8), 
@@ -56,6 +56,7 @@ def main():
     #sim.run(mp.after_sources(h),
     #	    until_after_sources = time_after_source)
     #f.close()
+
     sim.run(mp.at_every(1/fcen/10, mp.output_efield), until=1/fcen)
 
 #    print("--------------------------------")
