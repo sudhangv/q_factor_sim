@@ -23,7 +23,7 @@ def _a_poly_tapering(geom=None, n_segments=20, material_holes=mp.vacuum):
     h = 0.19
     
     Lx = 20
-    number_of_tapered_holes = 8
+    number_of_tapered_holes = 9
     
     substrate = True
     mode = "yO"
