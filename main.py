@@ -57,7 +57,7 @@ def main():
     #	    until_after_sources = time_after_source)
     #f.close()
 
-    sim.run(mp.at_every(1/fcen/10, mp.output_efield), until=1/fcen)
+    sim.run(mp.at_every(1/fcen/3, mp.output_efield), until=1/fcen)
 
 #    print("--------------------------------")
 #    print([m.freq for m in h.modes])
