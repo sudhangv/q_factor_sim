@@ -1,0 +1,1 @@
+Poly Tapering : hx = 0.25, hy = 0.4, w = 0.7, h= 0.19, a_center  = 0.363,  a_mirror = 0.423, mode = yO, sub =True, n_taper = 11, Lx = 20
