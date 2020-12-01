@@ -16,8 +16,15 @@ from cavitysimulations.utilities.sweep_util import *
 
 
 def main():
+    
+    resolution = 30                                      
+    filename = "sub_190_yO.hdf5"       # enter the filename of the desired bandstructure data here
+    
     geom = a_poly_tapered_cavity(substrate_parameters= {'waveguide_height'  : 0.19, 'substrate_height'  : 5},
-                                 waveguide_parameters = {'wvg_width' : 0.7, 'wvg_height'  : 0.19})
+                                 waveguide_parameters = {'wvg_width' : 0.7, 'wvg_height'  : 0.19},
+                                 filename = filename) 
+    
+    
     
     boundary_layers = get_boundary_layer(sim2d=False)
     
@@ -28,42 +35,29 @@ def main():
                          component=mp.Ey, 
                          center=mp.Vector3())]
     
-    #symmetries = [mp.Mirror(mp.X,+1), mp.Mirror(mp.Y,-1), mp.Mirror(mp.Z,+1)]
-   # symmetries = [mp.Mirror(mp.X,1), mp.Mirror(mp.Y,-1)]
     symmetries = [mp.Mirror(mp.X, +1)]   
     
-    sim = mp.Simulation(resolution = 30, 
+    sim = mp.Simulation(resolution = resolution, 
                         cell_size=mp.Vector3(20, 8, 8), 
                         geometry=geom, 
                         boundary_layers=boundary_layers, 
                         sources=sources,
-	                symmetries = symmetries,
+                        symmetries = symmetries,
                         progress_interval=100, dimensions = 3)
     
     h = mp.Harminv(mp.Ey, mp.Vector3(0, 0, 0), fcen, df)
     time_after_source = 500
     
-    
-    # Don't output eps anymore to save disk space
-    
-    #f = open("timed_harminv.txt", "w")
+    #mp.when_true(lambda x: sim.round_time()%50 == 0 and sim.round_time()> 200, lambda x: print(h.modes)
     
     sim.run(mp.at_beginning(mp.output_epsilon),
             mp.after_sources(h),
-            mp.when_true(lambda x: sim.round_time()%50 == 0 and sim.round_time()> 200, lambda x: print(h.modes) ),
             until_after_sources=time_after_source)
-    
-    #sim.run(mp.after_sources(h),
-    #	    until_after_sources = time_after_source)
-    #f.close()
 
-    sim.run(mp.at_every(1/fcen/3, mp.output_efield), until=1/fcen)
-
-#    print("--------------------------------")
-#    print([m.freq for m in h.modes])
-#    print("---------------------------------")
+    sim.run(mp.at_every(1/(fcen/5), mp.output_efield), until=1/fcen)  # if you want to generate the h5 files of the field values,
     
     visualize_sim_cell(sim)
+    
     print("Modal Volume: {}".format(sim.modal_volume_in_box()))
  
     
