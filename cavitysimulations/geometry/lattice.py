@@ -303,7 +303,9 @@ class OneDLattice():
     def polynomial_elliptical_hole_taper(self, number_of_tapered_holes, hx , hy , 
                                          w = 0.7 ,
                                          a_center = 0.390 ,  
-                                         a_mirror = 0.449):
+                                         a_mirror = 0.449,
+                                         hx_min_sweep = 0.05,
+                                         hy_min_sweep = 0.05):
                                                               
         '''
         
@@ -314,10 +316,15 @@ class OneDLattice():
         poly_coeff             : degrees of freedom for the polynomial, array = size (degree+1,)
         gamma_arr              : array of N_taper equispaced gammas between (and including) gamma_center and gamma_mirror
         a_arr                  : array of N_taper values of a for each mirror segment
-        
-        
+        hx_min
+        hy_min
         '''
         
+        global hx_min
+        global hy_min
+        
+        hx_min = hx_min_sweep
+        hy_min = hy_min_sweep
         
         index_a_center = int((a_center - a_min)/ del_a + 0.1)
         index_a_mirror = int((a_mirror - a_min)/del_a + 0.1)
@@ -338,13 +345,13 @@ class OneDLattice():
         gamma_data = self.gamma_data
         
         gamma_arr = np.linspace(gamma_center, gamma_mirror, N_taper) 
-        
+        breakpoint()
         gamma_interest, a_interest = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror )
 
         
         a_arr = np.interp(x = gamma_arr, xp = gamma_interest, fp = a_interest )
         
-        breakpoint()
+#        breakpoint()
 #         poly_coeff = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror, degree = 8)
 #         polynomial = np.poly1d(poly_coeff)
 #         a_arr = polynomial(gamma_arr)
@@ -440,12 +447,12 @@ def polynomial_fit(gamma_data, w, hy, hx, gamma_mirror, degree = 10, a_mirror = 
     a_list = np.arange(a_min, a_max + delta, del_a)                        # list of a
         
     gamma_arr = gamma_data[index_w, :, index_hy, index_hx]               # array of gamma for fixed w, hy and hx
-    gamma_NZ = gamma_arr[ gamma_arr > 0]
+    gamma_NZ = np.insert(gamma_arr[ gamma_arr > 0], 0, 0)
     
-    gamma_interest = gamma_NZ[ : np.where( (gamma_NZ == gamma_mirror))[0][0]]
-    a_interest = a_list[ np.where(gamma_arr > 0)][ : len(gamma_interest) ]
+    gamma_interest = gamma_NZ[ : (np.where( (gamma_NZ == gamma_mirror))[0][0] + 1)]
+    a_interest = a_list[ np.insert(np.where(gamma_arr > 0), 0, np.where(gamma_arr > 0)[0] - 1) ][ : len(gamma_interest) ]
     
-    #breakpoint()
+    breakpoint()
     
     return gamma_interest, a_interest
     

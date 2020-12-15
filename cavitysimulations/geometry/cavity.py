@@ -8,7 +8,7 @@ from .waveguide import *
 from ..utilities.sweep_util import *
 
 
-def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx, 
+def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx, hx_min_sweep, hy_min_sweep,
                      number_of_tapered_holes, substrate, mode,
                      geom = None, material_holes = mp.vacuum, 
                      filename = "bandstructure_data/perturb_sub_100_yO.hdf5"):
@@ -38,7 +38,9 @@ def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx,
                                                  hy = hy, 
                                                  w = w, 
                                                  a_center = a_center, 
-                                                 a_mirror = a_mirror)
+                                                 a_mirror = a_mirror,
+                                                 hx_min_sweep = hx_min_sweep,
+                                                 hy_min_sweep = hy_min_sweep)
     lattice.apply_poly_spacing()
     
     print("--------------------------------------------------------------------------------------------------------")
@@ -169,8 +171,8 @@ def a_normal_cavity(geom = None, n_segments=20, waveguide_parameters= None, subs
     
                
 
-def a_poly_tapered_cavity(geom = None, waveguide_parameters = None, 
-                          substrate_parameters = None, cavity_parameters = None, 
+def a_poly_tapered_cavity(geom = None, waveguide_parameters = None, substrate_parameters = None, 
+                          cavity_parameters = None, sweep_parameters = None,
                           filename = "bandstructure_data/perturb_sub_100_yO.hdf5"):
     if geom is None:
         geom = []
@@ -183,7 +185,7 @@ def a_poly_tapered_cavity(geom = None, waveguide_parameters = None,
 
     geom = add_waveguide_1d(geom = geom, **waveguide_parameters)
 
-    geom, _ = _a_poly_tapering(geom = geom, filename = filename, **cavity_parameters)
+    geom, _ = _a_poly_tapering(geom = geom, filename = filename, **cavity_parameters, **sweep_parameters)
 
     geom = add_substrate(geom = geom, **substrate_parameters)
 
