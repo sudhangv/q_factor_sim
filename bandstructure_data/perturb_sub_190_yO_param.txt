@@ -1,4 +1,4 @@
-wvg_height = 0.19 , mode = yO, SUBSRATE = True
+wvg_height = 0.19 , mode = yO, SUBSRATE = True, hx_min = 0.15, hy_min = 0.225
 hx = 0.15, hy = 0.225, a = 0.325, w = 0.65, gamma = 0.01561, freqs = 196.4415 , 232.7495 
 hx = 0.15, hy = 0.225, a = 0.326, w = 0.65, gamma = 0.02379, freqs = 196.0229 , 232.3089 
 hx = 0.15, hy = 0.225, a = 0.327, w = 0.65, gamma = 0.02992, freqs = 195.5848 , 231.733 
