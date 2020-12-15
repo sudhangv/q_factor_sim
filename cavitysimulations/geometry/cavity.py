@@ -8,27 +8,30 @@ from .waveguide import *
 from ..utilities.sweep_util import *
 
 
-def _a_poly_tapering(geom=None, n_segments=20, material_holes=mp.vacuum):
+def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx, 
+                     number_of_tapered_holes, substrate, mode,
+                     geom = None, material_holes = mp.vacuum, 
+                     filename = "bandstructure_data/perturb_sub_100_yO.hdf5"):
     
     if geom is None:
          geom = []
             
     material_holes = index_to_material(material_holes)
     
-    hx = 0.25 
-    hy = 0.400
-    w = 0.7
-    a_center = 0.363
-    a_mirror = 0.423
-    h = 0.19
+#     hx = 0.25 
+#     hy = 0.400
+#     w = 0.7
+#     a_center = 0.363
+#     a_mirror = 0.423
+#     h = 0.19
     
-    Lx = 20
-    number_of_tapered_holes = 17
+#     Lx = 20
+#     number_of_tapered_holes = 17
     
-    substrate = True
-    mode = "yO"
+#     substrate = True
+#     mode = "yO"
     
-    lattice = OneDLattice(Lx = Lx, filename = "sub_190_yO.hdf5")
+    lattice = OneDLattice(Lx = Lx, filename = filename)
     
     z = lattice.polynomial_elliptical_hole_taper(number_of_tapered_holes = number_of_tapered_holes, 
                                                  hx = hx, 
@@ -166,7 +169,9 @@ def a_normal_cavity(geom = None, n_segments=20, waveguide_parameters= None, subs
     
                
 
-def a_poly_tapered_cavity(geom=None, n_segments=20, waveguide_parameters=None, substrate_parameters=None):
+def a_poly_tapered_cavity(geom = None, waveguide_parameters = None, 
+                          substrate_parameters = None, cavity_parameters = None, 
+                          filename = "bandstructure_data/perturb_sub_100_yO.hdf5"):
     if geom is None:
         geom = []
 
@@ -176,11 +181,11 @@ def a_poly_tapered_cavity(geom=None, n_segments=20, waveguide_parameters=None, s
     if substrate_parameters is None:
         substrate_parameters = {}
 
-    geom = add_waveguide_1d(geom=geom, **waveguide_parameters)
+    geom = add_waveguide_1d(geom = geom, **waveguide_parameters)
 
-    geom, _ = _a_poly_tapering(geom=geom, n_segments=n_segments)
+    geom, _ = _a_poly_tapering(geom = geom, filename = filename, **cavity_parameters)
 
-    geom = add_substrate(geom=geom, **substrate_parameters)
+    geom = add_substrate(geom = geom, **substrate_parameters)
 
     return geom
                                                                                                       

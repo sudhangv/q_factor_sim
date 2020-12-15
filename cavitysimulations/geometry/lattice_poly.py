@@ -23,7 +23,8 @@ import meep as mp
 del_w, del_a, del_hy, del_hx = 0.05, 0.001, 0.025, 0.025   
 w_max ,a_max = 0.7, 0.45
 w_min, a_min, hy_min, hx_min = 0.65, 0.25, 0.1, 0.05
-delta = 0.000001
+delta = 0
+
 class OneDLattice():
     
     
@@ -33,7 +34,7 @@ class OneDLattice():
         The first 3 entries are the x,y,z coordinate.
         The last 2 represent hx and hy.
         """
-        
+       
         self.coordinates = np.zeros((Lx, 5))
         self.filename = filename
         self.Lx = Lx
@@ -298,7 +299,7 @@ class OneDLattice():
             self.modify_hx(i, 1)
             self.modify_hy(i, (y_off - N ** 4 * (1 - relative_diameter_at_end)) / y_off)
             
-    # -------------------CHANGE CHANGE CHANGE----------------------------------#
+  
     
     def polynomial_elliptical_hole_taper(self, number_of_tapered_holes, hx , hy , 
                                          w = 0.7 ,
@@ -309,7 +310,7 @@ class OneDLattice():
         
         a_center(gamma_center) : lattice constant ( gamma ) at the cavity segment
         a_mirror(gamma_mirror) : lattice constant ( gamma ) for non-tapered mirror segment
-        X_data                 : sweep data
+        data                   : sweep data
         polynomial             : curve thata fits gamma vs a data
         poly_coeff             : degrees of freedom for the polynomial, array = size (degree+1,)
         gamma_arr              : array of N_taper equispaced gammas between (and including) gamma_center and gamma_mirror
@@ -317,7 +318,6 @@ class OneDLattice():
         
         
         '''
-        
         
         index_a_center = int((a_center - a_min)/ del_a + 0.1)
         index_a_mirror = int((a_mirror - a_min)/del_a + 0.1)
@@ -335,16 +335,13 @@ class OneDLattice():
         N_taper = number_of_tapered_holes
         N_mirror = self.Lx - N_taper
         
-        gamma_data = self.gamma_data
-        
         gamma_arr = np.linspace(gamma_center, gamma_mirror, N_taper) 
-        
+    
         gamma_interest, a_interest = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror )
 
         
         a_arr = np.interp(x = gamma_arr, xp = gamma_interest, fp = a_interest )
         
-        breakpoint()
 #         poly_coeff = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror, degree = 8)
 #         polynomial = np.poly1d(poly_coeff)
 #         a_arr = polynomial(gamma_arr)
@@ -352,18 +349,13 @@ class OneDLattice():
         a_arr[0] = a_center
         a_arr.sort()
         
-        
         self.poly_spacing = np.append(a_arr, np.zeros(N_mirror))
             
         for i in range(N_mirror):
             self.poly_spacing[N_taper+i] = a_mirror
         
-        #self.poly_spacing[0] = a_center
-        
         return self.poly_spacing
-    
-    # -------------------CHANGE CHANGE CHANGE----------------------------------#
-    
+   
     def apply_poly_spacing(self):        
         
         self.coordinates[0,0] = self.poly_spacing[0] / 2
@@ -410,7 +402,13 @@ class OneDLattice():
         except Exception:
             pass
         
-        hf.close()   
+        hf.close()
+        
+#         x = np.where(data ==-1)
+#         for i in range(len(x[0])):
+#             data[x[0][i], x[1][i], x[2][i], x[3][i] ] = 0    # data cleaning 
+        
+ 
     
     def get_index(self, w, a, hy, hx):
         
@@ -421,7 +419,7 @@ class OneDLattice():
         
         return index_w, index_a, index_hy, index_hx
     
- # -------------------CHANGE CHANGE CHANGE---------------------------------- #   
+ 
     
 def polynomial_fit(gamma_data, w, hy, hx, gamma_mirror, degree = 10, a_mirror = 0.347 ):            
         
@@ -445,8 +443,8 @@ def polynomial_fit(gamma_data, w, hy, hx, gamma_mirror, degree = 10, a_mirror = 
     gamma_interest = gamma_NZ[ : np.where( (gamma_NZ == gamma_mirror))[0][0]]
     a_interest = a_list[ np.where(gamma_arr > 0)][ : len(gamma_interest) ]
     
-    #breakpoint()
-    
     return gamma_interest, a_interest
     
+    #p_coeff = np.polyfit(gamma_interest, a_interest, degree)       # degress of freedom for the polynomial
     
+    #return p_coeff
