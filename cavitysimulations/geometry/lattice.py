@@ -345,7 +345,7 @@ class OneDLattice():
         gamma_data = self.gamma_data
         
         gamma_arr = np.linspace(gamma_center, gamma_mirror, N_taper) 
-        breakpoint()
+        #breakpoint()
         gamma_interest, a_interest = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror )
 
         
@@ -452,7 +452,7 @@ def polynomial_fit(gamma_data, w, hy, hx, gamma_mirror, degree = 10, a_mirror = 
     gamma_interest = gamma_NZ[ : (np.where( (gamma_NZ == gamma_mirror))[0][0] + 1)]
     a_interest = a_list[ np.insert(np.where(gamma_arr > 0), 0, np.where(gamma_arr > 0)[0] - 1) ][ : len(gamma_interest) ]
     
-    breakpoint()
+    #breakpoint()
     
     return gamma_interest, a_interest
     
