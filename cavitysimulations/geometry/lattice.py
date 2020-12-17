@@ -345,17 +345,12 @@ class OneDLattice():
         gamma_data = self.gamma_data
         
         gamma_arr = np.linspace(gamma_center, gamma_mirror, N_taper) 
-        #breakpoint()
+        
         gamma_interest, a_interest = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror )
 
         
         a_arr = np.interp(x = gamma_arr, xp = gamma_interest, fp = a_interest )
-        
-#        breakpoint()
-#         poly_coeff = polynomial_fit(self.gamma_data, w , hy, hx , gamma_mirror, degree = 8)
-#         polynomial = np.poly1d(poly_coeff)
-#         a_arr = polynomial(gamma_arr)
-        
+        #breakpoint()
         a_arr[0] = a_center
         a_arr.sort()
         
