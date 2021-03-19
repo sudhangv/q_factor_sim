@@ -8,7 +8,7 @@ from .waveguide import *
 from ..utilities.sweep_util import *
 
 
-def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx, hx_min_sweep, hy_min_sweep,
+def _a_poly_tapering(hx, hy, w, a_center, a_mirror, wvg_height , Lx, hx_min_sweep, hy_min_sweep,
                      number_of_tapered_holes, substrate, mode,
                      geom = None, material_holes = mp.vacuum, 
                      filename = "bandstructure_data/perturb_sub_100_yO.hdf5"):
@@ -44,10 +44,10 @@ def _a_poly_tapering(hx, hy, w, a_center, a_mirror, h , Lx, hx_min_sweep, hy_min
     lattice.apply_poly_spacing()
     
     print("--------------------------------------------------------------------------------------------------------")
-    print(" Poly Tapering : hx = {}, hy = {}, w = {}, h= {}, a_center  = {},  a_mirror = {}, mode = {}, sub ={}, n_taper = {}, Lx = {}".format(hx, hy, w, h, a_center,a_mirror, mode, substrate, number_of_tapered_holes,Lx))
+    print(" Poly Tapering : hx = {}, hy = {}, w = {}, wvg_height = {}, a_center  = {},  a_mirror = {}, mode = {}, sub ={}, n_taper = {}, Lx = {}".format(hx, hy, w, wvg_height, a_center,a_mirror, mode, substrate, number_of_tapered_holes,Lx))
     print("--------------------------------------------------------------------------------------------------------")
     f = open("text_file.txt", "w")
-    f.write("Poly Tapering : hx = {}, hy = {}, w = {}, h= {}, a_center  = {},  a_mirror = {}, mode = {}, sub ={}, n_taper = {}, Lx = {}".format(hx, hy, w, h, a_center,a_mirror, mode, substrate, number_of_tapered_holes,Lx))
+    f.write("Poly Tapering : hx = {}, hy = {}, w = {}, wvg_height = {}, a_center  = {},  a_mirror = {}, mode = {}, sub ={}, n_taper = {}, Lx = {}".format(hx, hy, w, wvg_height, a_center,a_mirror, mode, substrate, number_of_tapered_holes,Lx))
     f.close()   
 
     # cavity holes

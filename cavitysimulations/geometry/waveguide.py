@@ -45,7 +45,7 @@ def add_waveguide_1d_on_substrate(geom=None, wvg_height=.22, substrate_height=5,
     return geom
 
 
-def add_substrate(geom=None, waveguide_height=0.22, substrate_height=5, material=mp.Medium(index=1.44)):
+def add_substrate(geom=None, wvg_height=0.22, substrate_height=5, material=mp.Medium(index=1.44)):
     """
     Creates a (by default SiO2) substrate.
     If the unlike case occurs that we need to change the center, we could again make everything relative to the center
@@ -54,7 +54,7 @@ def add_substrate(geom=None, waveguide_height=0.22, substrate_height=5, material
     if geom is None:
         geom = []
 
-    _center = mp.Vector3(0, 0, -waveguide_height/2-substrate_height/2)
+    _center = mp.Vector3(0, 0, -wvg_height/2 - substrate_height/2)
 
     geom.append(mp.Block(material=index_to_material(material),
                          center=_center,
