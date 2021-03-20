@@ -16,7 +16,6 @@ CONTENTS:
 (2)get_freq_Thz
 (3)get_gamma_from_Thz
 (4)get_freqs
-(5)add_substrate
 (6)visualise_geometry
 (7)do_the_sweep
 (8)get_index((w, a, hy, hx)
