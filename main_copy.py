@@ -16,13 +16,16 @@ from cavitysimulations.utilities.sweep_util import *
 
 
 def main():
-    geom = a_poly_tapered_cavity(substrate_parameters= {'waveguide_height'  : 0.19, 'substrate_height'  : 5},
-                                 waveguide_parameters = {'wvg_width' : 0.7, 'wvg_height'  : 0.19},
-                                 cavity_parameters = {'hx' : 0.3, 'hy' : 0.3, 'w' : 0.7, 'h' : 0.19,
-                                                      'a_center' : 0.379, 'a_mirror' : 0.424, 
-                                                      'Lx' : 20, 'number_of_tapered_holes' : 7,
-                                                      'substrate' : True, 'mode' : 'yO' },
-                                 sweep_parameters = {'hx_min_sweep' : 0.15, 'hy_min_sweep' : 0.225},
+    
+    wvg_height = 0.19
+    
+    geom = a_poly_tapered_cavity(substrate_parameters= {'wvg_height': wvg_height, 'substrate_height': 5},
+                                 waveguide_parameters = {'wvg_width': 0.7, 'wvg_height'  : wvg_height},
+                                 cavity_parameters = {'hx' : 0.3, 'hy': 0.3, 'w' : 0.7, 'wvg_height': wvg_height,
+                                                      'a_center': 0.379, 'a_mirror': 0.424, 
+                                                      'Lx': 20, 'number_of_tapered_holes': 7,
+                                                      'substrate': True, 'mode': 'yO' },
+                                 sweep_parameters = {'hx_min_sweep': 0.15, 'hy_min_sweep': 0.225},
                                  filename = "bandstructure_data/perturb_sub_190_yO.h5")
     
     boundary_layers = get_boundary_layer(sim2d=False)
@@ -68,7 +71,7 @@ def main():
     
     print("Modal Volume: {}".format(sim.modal_volume_in_box()))
     
-    #visualize_sim_cell(sim)
+    visualize_sim_cell(sim)
     
 if __name__ == '__main__':
     main()
