@@ -182,12 +182,16 @@ def a_poly_tapered_cavity(geom = None, waveguide_parameters = None, substrate_pa
 
     if substrate_parameters is None:
         substrate_parameters = {}
-
+    
+    
     geom = add_waveguide_1d(geom = geom, **waveguide_parameters)
 
     geom, _ = _a_poly_tapering(geom = geom, filename = filename, **cavity_parameters, **sweep_parameters)
-
-    geom = add_substrate(geom = geom, **substrate_parameters)
+    
+    if substrate_parameters['embed_in_substrate'] is True:
+        geom = add_filled_substrate(geom=geom, **substrate_parameters, sim_shape=(20, 8, 8))
+    else:
+        geom = add_substrate(geom = geom, **substrate_parameters)
 
     return geom
                                                                                                       

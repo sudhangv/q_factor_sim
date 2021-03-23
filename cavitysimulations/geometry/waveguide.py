@@ -45,7 +45,8 @@ def add_waveguide_1d_on_substrate(geom=None, wvg_height=.22, substrate_height=5,
     return geom
 
 
-def add_substrate(geom=None, wvg_height=0.22, substrate_height=5, material=mp.Medium(index=1.44)):
+def add_substrate(geom=None, wvg_height=0.22, substrate_height=5, material=mp.Medium(index=1.44),
+                  embed_in_substrate = True):
     """
     Creates a (by default SiO2) substrate.
     If the unlike case occurs that we need to change the center, we could again make everything relative to the center
@@ -62,21 +63,37 @@ def add_substrate(geom=None, wvg_height=0.22, substrate_height=5, material=mp.Me
 
     return geom
 
-def add_filled_substrate(geom=None, wvg_height=0.22, material=mp.Medium(index=1.44), (sx, sy, sz)=(20, 8, 8):
+def add_filled_substrate(geom=None, wvg_height=0.22, material=mp.Medium(index=1.44), substrate_height=5,
+                         embed_in_substrate = True, sim_shape=(20, 8, 8)):
     
     """
     Return geom after completely filling its surroundings with the substrate material. 
     If geom is empty, than just returns a cell sized (sx, sy, sz) filled with the background material.
     """
-    
-    geom_temp = []
+    sx, sy, sz = sim_shape
+    geom_temp = 0
                          
     if geom is not None:
+        geom.pop()
         geom_temp = geom
+        
+   
+    substrate_geom = [mp.Block(material=index_to_material(material),
+                               center=mp.Vector3(0, 0, 0),
+                               size=mp.Vector3(sx, sy, sz))]
+    substrate_geom.extend(geom_temp)
     
-    geom = mp.Block(material=index_to_material(material),
-                    center=_center,
-                    size=mp.Vector3(sx, sy, sz)).append(geom_temp)
-                         
+    geom = substrate_geom
+    
+    center_below = mp.Vector3(0, 0, -wvg_height/2 - substrate_height/2)
+    geom.append(mp.Block(material=index_to_material(material),
+                         center=center_below,
+                         size=mp.Vector3(mp.inf, mp.inf, substrate_height)))
+    
+    center_up = mp.Vector3(0, 0, wvg_height/2 + substrate_height/2)
+    geom.append(mp.Block(material=index_to_material(material),
+                         center=center_up,
+                         size=mp.Vector3(mp.inf, mp.inf, substrate_height)))
+    
     return geom
 
