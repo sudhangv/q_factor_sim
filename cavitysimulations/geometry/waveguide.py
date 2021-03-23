@@ -62,3 +62,21 @@ def add_substrate(geom=None, wvg_height=0.22, substrate_height=5, material=mp.Me
 
     return geom
 
+def add_filled_substrate(geom=None, wvg_height=0.22, material=mp.Medium(index=1.44), (sx, sy, sz)=(20, 8, 8):
+    
+    """
+    Return geom after completely filling its surroundings with the substrate material. 
+    If geom is empty, than just returns a cell sized (sx, sy, sz) filled with the background material.
+    """
+    
+    geom_temp = []
+                         
+    if geom is not None:
+        geom_temp = geom
+    
+    geom = mp.Block(material=index_to_material(material),
+                    center=_center,
+                    size=mp.Vector3(sx, sy, sz)).append(geom_temp)
+                         
+    return geom
+
