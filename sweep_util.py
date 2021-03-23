@@ -376,7 +376,7 @@ def index_to_material(element):
     else:
         return mp.Medium(index=element)
 
-def get_value_from_index(index, param = 'a'):
+def get_value_from_index(index, param = 'a', hx_min = 0.125, hy_min = 0.2):
     del_a = 0.001
     del_hy = 0.025
     del_hx = 0.025 
@@ -388,8 +388,8 @@ def get_value_from_index(index, param = 'a'):
     w_min = 0.65         #  lower limit of w 
     w_max = 0.75        #  upper limit of w 
 
-    hx_min = 0.05        # lower limit of the sweep of a
-    hy_min = 0.1        #  lower limit of hy 
+    hx_min = hx_min        # lower limit of the sweep of a
+    hy_min = hy_min        #  lower limit of hy 
     
     if param == 'a':
         return (a_min + del_a * index)
